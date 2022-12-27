@@ -19,17 +19,18 @@ export class TwinColumnPage extends BasePage {
         await this.page.goto(twinColumnUrl);
     }
 
-    async selectListItemByNameAndIsChecked(name: string): Promise<boolean> {
+    async selectListItemByName(name: string) {
         this.listItem = await this.frame.locator(`//li[*/.='${name}']`);
         await this.listItem.click();
+    }
+
+    async isLastItemChecked(): Promise<boolean> {
         const listItemClass = await this.listItem.locator("label").getAttribute("class");
         return listItemClass.includes("eos-checkbox-wrapper-checked");
     }
 
-    async addListItemByNameAndIsChecked(name: string) {
-        const isChecked = await this.selectListItemByNameAndIsChecked(name);
+    async addListItems() {
         await this.arrowRight.click();
-        return isChecked;
     }
 
     async getSummaryListItems(): Promise<string> {
