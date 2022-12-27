@@ -6,10 +6,11 @@ test("Twin column validation via adding item", async ({ page }) => {
     const twinColumnPage = new TwinColumnPage(page);
 
     await twinColumnPage.goto();
-    await twinColumnPage.addListItemByName(listName);
+    const isItemChecked = await twinColumnPage.addListItemByNameAndIsChecked(listName);
     const summaryList = await twinColumnPage.getSummaryListItems();
     const isButtonEnabled = await twinColumnPage.isButtonEnabled();
 
+    expect(isItemChecked).toBe(true);
     expect(summaryList).toContain(listName);
     expect(isButtonEnabled).toBe(false);
 });
